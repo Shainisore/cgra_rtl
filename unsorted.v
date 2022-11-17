@@ -286,8 +286,8 @@ module ChannelRTL__DataType_CGRAData_32_1_1__latency_1
   input logic [0:0] send__rdy
 );
 
-  assign recv__rdy = send__rdy;
-  assign send__en = recv__en;
+  assign recv__rdy = 1'd1;
+  assign send__en = 1'd1;
   assign send__msg = recv__msg;
   assign count = 2'd0;
 
