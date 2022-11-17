@@ -18,7 +18,7 @@ typedef struct packed {
 } CGRAData_1_1;
 
 
-// PyMTL Component AdderRTL Definitiondef
+// PyMTL Component AdderRTL Definition
 // Full name: AdderRTL__DataType_CGRAData_32_1_1__PredicateType_CGRAData_1_1__CtrlType_CGRAConfig_6_4_6_8__num_inports_4__num_outports_2__data_mem_size_100
 // At /home/kevin/Desktop/final_test/fu/single/AdderRTL.py
 

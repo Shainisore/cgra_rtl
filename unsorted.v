@@ -285,63 +285,69 @@ module ChannelRTL__DataType_CGRAData_32_1_1__latency_1
   output CGRAData_32_1_1 send__msg,
   input logic [0:0] send__rdy
 );
-  localparam CGRAData_32_1_1 data = { 32'd0, 1'd0, 1'd0 };
-  localparam logic [31:0] latency = 32'd1;
-  //-------------------------------------------------------------
-  // Component queues[0:0]
-  //-------------------------------------------------------------
 
-  logic [0:0] queues__clk [0:0] ;
-  logic [1:0] queues__count [0:0] ;
-  logic [0:0] queues__reset [0:0] ;
-  logic [0:0] queues__deq__en [0:0] ;
-  logic [0:0] queues__deq__rdy [0:0] ;
-  CGRAData_32_1_1 queues__deq__ret [0:0] ;
-  logic [0:0] queues__enq__en [0:0] ;
-  CGRAData_32_1_1 queues__enq__msg [0:0] ;
-  logic [0:0] queues__enq__rdy [0:0] ;
+  assign recv__rdy = send__rdy;
+  assign send__en = recv__en;
+  assign send__msg = recv__msg;
+  assign count = 2'd0;
 
-  NormalQueueRTL__EntryType_CGRAData_32_1_1__num_entries_2 queues__0
-  (
-    .clk( queues__clk[0] ),
-    .count( queues__count[0] ),
-    .reset( queues__reset[0] ),
-    .deq__en( queues__deq__en[0] ),
-    .deq__rdy( queues__deq__rdy[0] ),
-    .deq__ret( queues__deq__ret[0] ),
-    .enq__en( queues__enq__en[0] ),
-    .enq__msg( queues__enq__msg[0] ),
-    .enq__rdy( queues__enq__rdy[0] )
-  );
+  // localparam CGRAData_32_1_1 data = { 32'd0, 1'd0, 1'd0 };
+  // localparam logic [31:0] latency = 32'd1;
+  // //-------------------------------------------------------------
+  // // Component queues[0:0]
+  // //-------------------------------------------------------------
+
+  // logic [0:0] queues__clk [0:0] ;
+  // logic [1:0] queues__count [0:0] ;
+  // logic [0:0] queues__reset [0:0] ;
+  // logic [0:0] queues__deq__en [0:0] ;
+  // logic [0:0] queues__deq__rdy [0:0] ;
+  // CGRAData_32_1_1 queues__deq__ret [0:0] ;
+  // logic [0:0] queues__enq__en [0:0] ;
+  // CGRAData_32_1_1 queues__enq__msg [0:0] ;
+  // logic [0:0] queues__enq__rdy [0:0] ;
+
+  // NormalQueueRTL__EntryType_CGRAData_32_1_1__num_entries_2 queues__0
+  // (
+  //   .clk( queues__clk[0] ),
+  //   .count( queues__count[0] ),
+  //   .reset( queues__reset[0] ),
+  //   .deq__en( queues__deq__en[0] ),
+  //   .deq__rdy( queues__deq__rdy[0] ),
+  //   .deq__ret( queues__deq__ret[0] ),
+  //   .enq__en( queues__enq__en[0] ),
+  //   .enq__msg( queues__enq__msg[0] ),
+  //   .enq__rdy( queues__enq__rdy[0] )
+  // );
   
-  always_comb begin : process
-    if ( recv__msg.bypass == 1'd0 ) begin
-      recv__rdy = queues__enq__rdy[0];
-      queues__enq__msg[0] = recv__msg;
-      queues__enq__en[0] = recv__en && queues__enq__rdy[0];
-      for ( int i = 0; i < latency - 1; i += 1 ) begin
-        queues__enq__msg[i + 1] = queues__deq__ret[i];
-        queues__enq__en[i + 1] = queues__deq__rdy[i] && queues__enq__rdy[i + 1];
-        queues__deq__en[i] = queues__enq__en[i + 1];
-      end
-      send__msg = queues__deq__ret[latency - 1];
-      send__en = send__rdy && queues__deq__rdy[latency - 1];
-      queues__deq__en[latency - 1] = send__en;
-    end
-    else begin
-      send__msg = data;
-      send__msg.payload = recv__msg.payload;
-      send__msg.predicate = recv__msg.predicate;
-      //send__msg.bypass = 1'd0;
-      send__msg.bypass = 1'd1;
-      send__en = send__rdy && recv__en;
-      recv__rdy = send__rdy;
-    end
-  end
+  // always_comb begin : process
+  //   if ( recv__msg.bypass == 1'd0 ) begin
+  //     recv__rdy = queues__enq__rdy[0];
+  //     queues__enq__msg[0] = recv__msg;
+  //     queues__enq__en[0] = recv__en && queues__enq__rdy[0];
+  //     for ( int i = 0; i < latency - 1; i += 1 ) begin
+  //       queues__enq__msg[i + 1] = queues__deq__ret[i];
+  //       queues__enq__en[i + 1] = queues__deq__rdy[i] && queues__enq__rdy[i + 1];
+  //       queues__deq__en[i] = queues__enq__en[i + 1];
+  //     end
+  //     send__msg = queues__deq__ret[latency - 1];
+  //     send__en = send__rdy && queues__deq__rdy[latency - 1];
+  //     queues__deq__en[latency - 1] = send__en;
+  //   end
+  //   else begin
+  //     send__msg = data;
+  //     send__msg.payload = recv__msg.payload;
+  //     send__msg.predicate = recv__msg.predicate;
+  //     //send__msg.bypass = 1'd0;
+  //     send__msg.bypass = 1'd1;
+  //     send__en = send__rdy && recv__en;
+  //     recv__rdy = send__rdy;
+  //   end
+  // end
 
-  assign queues__clk[0] = clk;
-  assign queues__reset[0] = reset;
-  assign count = queues__count[0];
+  // assign queues__clk[0] = clk;
+  // assign queues__reset[0] = reset;
+  // assign count = queues__count[0];
 
 endmodule
 
