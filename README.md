@@ -60,4 +60,4 @@ A sample launcher used with SPEC CPU2017.
 
 ## Notes
 
-- BAR2 is hard-coded at `0x22feffa00000` in both CSR utilities and the kernel module. It should be set to your local fpga's bar2 address.
+- BAR2 is hard-coded at `0x22feffa00000` in both CSR utilities and the kernel module. It should be set to your local fpga's function 1 bar2 address.
