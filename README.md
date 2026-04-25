@@ -1,7 +1,3 @@
-# Software Guide
-
-This repository collects the software pieces used by the CXL CMMU artifact. The `software/` tree is not a standalone product by itself: it is a mix of kernel modifications, kernel modules, user-space CSR utilities, and helper scripts that are meant to be used together.
-
 ## Repository layout
 
 ```text
